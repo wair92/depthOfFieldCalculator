@@ -20,12 +20,16 @@ class ViewController: UIViewController, UIPickerViewDataSource, UIPickerViewDele
     @IBOutlet weak var nearestAcceptableSharpness: UILabel!
     @IBOutlet var viewBackground: UIView!
     
+    @IBAction func focalLenghtEdited(_ sender: UITextField) {
+        calculateData()
+    }
     @IBAction func calculateit(_ sender: UIButton) {
-        furthestAcceptableSharpness.text = formatFurthestAcceptableSharpness()
-        nearestAcceptableSharpness.text = formatNearestAcceptableSharpness()
-        totalDepthOfField.text = formatTotalDepthOfField()
+        calculateData()
     }
     
+    @IBAction func focusDistanceEdited(_ sender: Any) {
+        calculateData()
+    }
     let cameras:[(name: String, value: Double)] = [("35 mm (Full Frame)", 0.03200), ("APSC", 0.02231)]
     let appertures:[(name: String, value: Double)] = [("f/1.2",1.2), ("f/1.4",1.4), ("f/1.8",1.8),("f/2",2.0),("f/2.8",2.8),("f/3.5",3.5),("f/4",4),("f/5.6", 5.6),("f/8",8.0),("f/11",11.0),("f/16", 16.0),("f/22", 22.0),("f/32", 32.0),("f/64", 64.0)]
     let metrics:[(name: String, value: Double)] = [("meters",1.0), ("cm",100), ("feets", 3.2808), ("inches", 39.37)]
@@ -62,6 +66,10 @@ class ViewController: UIViewController, UIPickerViewDataSource, UIPickerViewDele
         return element
     }
     
+    func pickerView(_ pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int) {
+        calculateData()
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         furthestAcceptableSharpness.text = formatFurthestAcceptableSharpness()
@@ -70,13 +78,12 @@ class ViewController: UIViewController, UIPickerViewDataSource, UIPickerViewDele
         viewBackground.backgroundColor = UIColor.systemBackground
         focalLength.textColor = UIColor.label
         focusDistance.textColor = UIColor.label
-        // Do any additional setup after loading the view.
+        apperture.selectRow(5, inComponent: 0, animated: true)
     }
     
     func countHyperFocal() -> Double{
         let cameraFormat = cameras [cameraType.selectedRow(inComponent: 0)].value
         let appertureType = appertures [apperture.selectedRow(inComponent: 0)].value
-        let metricsType = metrics [metric.selectedRow(inComponent: 0)].value
         let focalLengthValue = Double(focalLength.text!) ?? 0.0
         
         let eyesight = 1.0
@@ -156,5 +163,10 @@ class ViewController: UIViewController, UIPickerViewDataSource, UIPickerViewDele
         return retVal
     }
     
+    func calculateData(){
+        furthestAcceptableSharpness.text = formatFurthestAcceptableSharpness()
+        nearestAcceptableSharpness.text = formatNearestAcceptableSharpness()
+        totalDepthOfField.text = formatTotalDepthOfField()
+    }
 }
 
