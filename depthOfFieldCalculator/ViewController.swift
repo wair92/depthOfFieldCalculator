@@ -18,6 +18,7 @@ class ViewController: UIViewController, UIPickerViewDataSource, UIPickerViewDele
     @IBOutlet weak var furthestAcceptableSharpness: UILabel!
     @IBOutlet weak var totalDepthOfField: UILabel!
     @IBOutlet weak var nearestAcceptableSharpness: UILabel!
+    @IBOutlet var viewBackground: UIView!
     
     @IBAction func calculateit(_ sender: UIButton) {
         furthestAcceptableSharpness.text = formatFurthestAcceptableSharpness()
@@ -66,6 +67,9 @@ class ViewController: UIViewController, UIPickerViewDataSource, UIPickerViewDele
         furthestAcceptableSharpness.text = formatFurthestAcceptableSharpness()
         nearestAcceptableSharpness.text = formatNearestAcceptableSharpness()
         totalDepthOfField.text = formatTotalDepthOfField()
+        viewBackground.backgroundColor = UIColor.systemBackground
+        focalLength.textColor = UIColor.label
+        focusDistance.textColor = UIColor.label
         // Do any additional setup after loading the view.
     }
     
